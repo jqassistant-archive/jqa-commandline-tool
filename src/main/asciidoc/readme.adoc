@@ -20,6 +20,62 @@ The following example will scan the content of the directories classes/ and test
 jqassistant.sh scan -f classes,test-classes
 ----
 
+=== Configuration
+
+The recommended way of configuring jQAssistant is using a file `.jqassistant.yml` located in the working directory.
+Available options are described in the section <<core:Configuration>>.
+
+Furthermore, the following command line specific option is supported:
+
+[source,yaml]
+----
+jqassistant:
+
+  # Defines the local and remote Maven repositories for retrieving additional plugins.
+  repositories:
+    # The path to the local repository.
+    #
+    # -Djqassistant.repositories.local (optional)
+    local: ~/.jqassistant/repository
+    remotes:
+      central:
+        # The URL of the Maven repository
+        #
+        # -Djqassistant.repositories.central.url
+        url:
+        # The user name for authenticating against the repository
+        #
+        # -Djqassistant.repositories.central.username (optional)
+        username:
+        # The password for authenticating against the repository
+        #
+        # -Djqassistant.repositories.central.password (optional)
+        password:
+
+  # The optional proxy to use for downloading additional plugins
+  proxy:
+    # The protocol of the proxy
+    #
+    # -Djqassistant.proxy.protocol (optional)
+    protocol: https
+    # The proxy host
+    #
+    # -Djqassistant.proxy.host
+    host:
+    # The proxy port
+    #
+    # -Djqassistant.proxy.port
+    port:
+    # The proxy user name for authentication
+    #
+    # -Djqassistant.proxy.username (optional)
+    username:
+    # The proxy password for authentication
+    #
+    # -Djqassistant.proxy.password (optional)
+    password:
+----
+
 === Tasks
 
 * <<cli:analyze>>
@@ -92,17 +148,16 @@ Executes an analysis.
 * <<cli:defaultGroupSeverity>>
 
 * -warnOnSeverity
-** determines the severity level for issuing warnings for failed with equal or higher severities
-** values: 'info', 'minor', 'major', 'critical' or 'blocker'
+** determines the severity level for reporting a warning.
+** values: 'info', 'minor', 'major', 'critical', 'blocker' or 'never'
 ** default: 'minor'
 * -failOnSeverity (-Djqassistant.failOnSeverity)
-** determines the severity level for breaking the build if at least one rule with an equal or higher severity failed
-** values: 'info', 'minor', 'major', 'critical' or 'blocker'
+** determines the severity level for reporting a failure.
+** values: 'info', 'minor', 'major', 'critical', 'blocker' or 'never'
 ** default: 'major'
-* -severity <severity>
-** specifies the severity of a problem for the analysis to fail. The program will return with exit code 2.
-** values: 'info', 'minor', 'major', 'critical' or 'blocker'
-** Deprecated: use `-failOnSeverity` instead
+* -continueOnSeverity
+** Determines if jQAssistant shall continue the build if failures have been detected. If not set the program will return with exit code 2.
+** default: 'false'
 * -executeAppliedConcepts
 ** Execute concepts which have already been applied before. The default is 'false' to save time on repeated runs of "analyze" on the
    same data. Setting this flag to 'true' is useful for creating and trying out new concepts.
@@ -181,6 +236,11 @@ Starts the integrated Neo4j web server.
 * <<cli:storeTrustCertificate>>
 
 ==== Common options
+
+[[cli:configurationLocations]]
+===== -configurationLocations <files> <directories>
+* the list of configuration locations, e.g. YAML files and directories
+* default: '.jqassistant.yml, .jqassistant.yaml, .jqassistant/\*.yml, .jqassistant/**.yaml'
 
 [[cli:storeDirectory]]
 ===== -s, --storeDirectory <directory>
