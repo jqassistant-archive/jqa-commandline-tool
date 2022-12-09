@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.buschmais.jqassistant.commandline.test.AbstractCLIIT.NeoVersion;
+import com.buschmais.jqassistant.commandline.test.AbstractCLIIT.Neo4jVersion;
 
 import org.junit.jupiter.api.extension.Extension;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -22,10 +22,10 @@ public class Neo4JTestTemplateInvocationContextProvider implements TestTemplateI
 
     @Override
     public Stream<TestTemplateInvocationContext> provideTestTemplateInvocationContexts(ExtensionContext context) {
-        return Stream.of(NeoVersion.values()).map(this::invocationContext);
+        return Stream.of(Neo4jVersion.values()).map(this::invocationContext);
     }
 
-    private TestTemplateInvocationContext invocationContext(NeoVersion version) {
+    private TestTemplateInvocationContext invocationContext(Neo4jVersion version) {
         return new TestTemplateInvocationContext() {
 
             @Override
@@ -41,15 +41,15 @@ public class Neo4JTestTemplateInvocationContextProvider implements TestTemplateI
     }
 
     private static class MyParameterResolver implements ParameterResolver {
-        private NeoVersion parameter;
+        private Neo4jVersion parameter;
 
-        public MyParameterResolver(NeoVersion version) {
+        public MyParameterResolver(Neo4jVersion version) {
             this.parameter = version;
         }
 
         @Override
         public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-            return parameterContext.getParameter().getType().equals(NeoVersion.class);
+            return parameterContext.getParameter().getType().equals(Neo4jVersion.class);
         }
 
         @Override

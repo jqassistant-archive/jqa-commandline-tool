@@ -30,12 +30,12 @@ import static org.junit.Assume.assumeTrue;
  */
 public abstract class AbstractCLIIT {
 
-    public enum NeoVersion {
-        NEO4JV3("neo4jv3");
+    public enum Neo4jVersion {
+        NEO4JV4("neo4jv4");
 
         private final String version;
 
-        NeoVersion(String neo4jVersion) {
+        Neo4jVersion(String neo4jVersion) {
             version = neo4jVersion;
         }
 
@@ -59,7 +59,7 @@ public abstract class AbstractCLIIT {
 
     private Properties properties = new Properties();
 
-    private NeoVersion neo4jVersion;
+    private Neo4jVersion neo4jVersion;
 
     /**
      * Represents the result of a CLI execution containing exit code and console
@@ -104,8 +104,8 @@ public abstract class AbstractCLIIT {
      * Reset the default store.
      */
     @BeforeEach
-    public void before(NeoVersion neoVersion) throws IOException {
-        neo4jVersion = neoVersion;
+    public void before(Neo4jVersion neo4jVersion) throws IOException {
+        this.neo4jVersion = neo4jVersion;
         properties.load(AbstractCLIIT.class.getResourceAsStream("/cli-test.properties"));
         File workingDirectory = getWorkingDirectory();
         FileUtils.cleanDirectory(workingDirectory);
