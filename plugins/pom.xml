@@ -50,7 +50,6 @@
             <groupId>com.buschmais.jqassistant.plugin</groupId>
             <artifactId>java</artifactId>
         </dependency>
-        <!-- todo java 11 -->
         <dependency>
             <groupId>com.buschmais.jqassistant.plugin</groupId>
             <artifactId>json</artifactId>
