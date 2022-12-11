@@ -30,8 +30,6 @@ import static org.junit.Assume.assumeTrue;
  */
 public abstract class AbstractCLIIT {
 
-    private static final String NEO4J_VERSION = "neo4jv4";
-
     public static final String RULES_DIRECTORY = AbstractCLIIT.class.getResource("/rules").getFile();
 
     public static final String TEST_CONCEPT = "default:TestConcept";
@@ -119,7 +117,7 @@ public abstract class AbstractCLIIT {
                    SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC_OSX);
         String jqaHomeProperty = properties.getProperty("jqassistant.home");
         String projectVersionProperty = properties.getProperty("project.version");
-        String jqaHhome = new File(jqaHomeProperty + "jqassistant-commandline-" + NEO4J_VERSION + "-" + projectVersionProperty).getAbsolutePath();
+        String jqaHhome = new File(jqaHomeProperty + "jqassistant-commandline-distribution-" + projectVersionProperty).getAbsolutePath();
         List<String> command = new ArrayList<>();
         if (SystemUtils.IS_OS_WINDOWS) {
             command.add("cmd.exe");
@@ -153,7 +151,7 @@ public abstract class AbstractCLIIT {
      * @return The working directory.
      */
     protected File getWorkingDirectory() {
-        File workingDirectory = new File("target" + "/" + this.getClass().getSimpleName() + "/" + NEO4J_VERSION);
+        File workingDirectory = new File("target" + "/" + this.getClass().getSimpleName());
         workingDirectory.mkdirs();
         return workingDirectory;
     }
