@@ -55,7 +55,7 @@ public class AnalyzeTask extends AbstractAnalyzeTask {
             InMemoryReportPlugin inMemoryReportPlugin = new InMemoryReportPlugin(new CompositeReportPlugin(reportPlugins));
             try {
                 Analyzer analyzer = new AnalyzerImpl(analyze, pluginRepository.getClassLoader(), store, pluginRepository.getAnalyzerPluginRepository()
-                    .getRuleInterpreterPlugins(emptyMap()), inMemoryReportPlugin);
+                    .getRuleInterpreterPlugins(emptyMap()), inMemoryReportPlugin, LOGGER);
                 RuleSet availableRules = getAvailableRules(analyze
                     .rule());
                 analyzer.execute(availableRules, getRuleSelection(availableRules, analyze));
