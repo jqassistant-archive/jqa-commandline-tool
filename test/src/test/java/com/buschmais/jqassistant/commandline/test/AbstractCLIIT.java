@@ -36,7 +36,6 @@ public abstract class AbstractCLIIT {
     public static final String TEST_CONCEPT = "default:TestConcept";
     public static final String TEST_CONCEPT_WITH_PARAMETER = "default:TestConceptWithParameter";
     public static final String TEST_CONSTRAINT = "default:TestConstraint";
-    // defined as asciidoc
     public static final String CUSTOM_GROUP = "customGroup";
 
     private PluginRepository pluginRepository;
