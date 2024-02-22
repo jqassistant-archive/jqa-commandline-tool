@@ -101,7 +101,10 @@ public abstract class AbstractCLIIT {
 
     private PluginRepository pluginRepository;
 
+    private String neo4jVersion;
+
     private String jqaHome;
+
 
     /**
      * Represents the result of a CLI execution containing exit code and console
@@ -145,6 +148,7 @@ public abstract class AbstractCLIIT {
      */
     @BeforeEach
     public void before(String neo4jVersion) throws IOException {
+        this.neo4jVersion = neo4jVersion;
         this.jqaHome = getjQAHomeDirectory(neo4jVersion);
         File workingDirectory = getWorkingDirectory();
         FileUtils.cleanDirectory(workingDirectory);
@@ -165,6 +169,10 @@ public abstract class AbstractCLIIT {
         if (pluginRepository != null) {
             pluginRepository.destroy();
         }
+    }
+
+    protected String getNeo4jVersion() {
+        return neo4jVersion;
     }
 
     /**
@@ -192,8 +200,9 @@ public abstract class AbstractCLIIT {
         ProcessBuilder builder = new ProcessBuilder(command);
         Map<String, String> environment = builder.environment();
         environment.put("JQASSISTANT_HOME", jqaHome);
-        environment.put("JQASSISTANT_OPTS", "-Duser.home=" + userHome);
-        //        environment.put("JQASSISTANT_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000");
+        // add-opens is required by Neo4jv4 on JDK17
+        environment.put("JQASSISTANT_OPTS", "--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED -Duser.home=" + userHome);
+        // environment.put("JQASSISTANT_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000");
 
         File workingDirectory = getWorkingDirectory();
         builder.directory(workingDirectory);

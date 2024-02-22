@@ -7,4 +7,7 @@ if "%JAVA_HOME%" == "" (
 )
 
 set JQASSISTANT_HOME=%~dp0%\..
-%JAVA_CMD% --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED %JQASSISTANT_OPTS% -jar "%JQASSISTANT_HOME%\lib\${project.groupId}-${project.artifactId}-${project.version}.${project.packaging}" %*
+rem Required for Neo4j Plugin class loading in Neo4jServerFactory
+set JQASSISTANT_JVM_ARGS=--add-opens java.base/jdk.internal.loader=ALL-UNNAMED
+
+%JAVA_CMD% %JQASSISTANT_JVM_ARGS% %JQASSISTANT_OPTS% -jar "%JQASSISTANT_HOME%\lib\${project.groupId}-${project.artifactId}-${project.version}.${project.packaging}" %*
